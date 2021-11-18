@@ -1,6 +1,9 @@
 <template>
 <div class="maindiv">
+    <h1>ii) The Coin Flip</h1>
     <center>
+        <h1 style="font-size: 12pt">Number of Captives</h1>
+        <input type="text" placeholder="# of Prisoners" v-model="prisoners"/>
         <h1 style="font-size: 12pt">Chance Prisoner Will Flip Coin</h1>
         <div class="sidediv">
             <p>{{ probIn }}%</p>
@@ -8,10 +11,11 @@
             <input class="slider" type="range" min="0" max="100" id="probIn" v-model="probIn">
             <label for="probIn">100%</label>
         </div>
+    <h1 style="font-size: 12pt">Number of Iterations</h1>
     <input type="text" placeholder="Iterations" v-model="iterations">
     <h1>Chance of Escape:</h1>
-    <h1>{{ probOut }}%</h1>
-    <button v-on:click="simulate">Simulate</button>
+    <h1>{{ probOut.toFixed(5) }}%</h1>
+    <button v-bind:class="simclass" v-on:click="init">{{ simbutton }}</button>
     </center>
 
 </div>
@@ -24,21 +28,32 @@ export default {
     data: function() {
         return {
             probIn: 50,
-            probOut: 2.0,
+            probOut: 0,
             prisoners: 4,
             iterations: '100',
+            simbutton: 'Simulate',
+            simclass: ''
         }
     },
     methods: {
 
+        init() {
+
+            this.simbutton = 'Thinking...'
+            this.simclass = 'r'
+            setTimeout(this.simulate, 1)
+
+
+        },
        
         simulate() {
             
-            this.probIn = parseInt(this.probIn);
+            this.prisoners = parseInt(this.prisoners)
+            this.probIn = parseInt(this.probIn)
             this.iterations = parseInt(this.iterations)
-            this.probOut = 0.0;
-            this.probOut = parseFloat(this.probOut)
-          
+            
+            let result = 0
+
             for (let i = 0; i < this.iterations; i++) {
                 let totalFlips = 0;
                 for (let j = 0; j < this.prisoners; j++) {
@@ -46,30 +61,26 @@ export default {
                     flip >= this.probIn ? flip = false:flip = true;
                     if (flip) totalFlips++;
                 }
-            console.log(this.probOut)
             
                 switch (totalFlips) {                  
                     case 1:
-                        this.probOut = parseFloat(0.5) + parseFloat(this.probOut);
+                        result += 0.5;
                         break;
                     case 2:
-                        this.probOut = parseFloat(0.25) + parseFloat(this.probOut);
+                        result += 0.25;
                         break;
                     case 3:
-                        this.probOut = parseFloat(0.125) + parseFloat(this.probOut);
+                        result += 0.125;
                         break;
                     case 4:
-                        this.probOut = parseFloat(0.0625) + parseFloat(this.probOut);
+                        result += 0.0625;
                         break;
-                    }
-
-            console.log(this.probOut)
-            this.probOut = (this.probOut / this.iterations)*100
-
-       
-        
-
+                }
             }
+
+            this.probOut = (result / this.iterations)*100
+            this.simbutton = 'Simulate'
+            this.simclass = ''
 
         },
         
@@ -88,19 +99,27 @@ input {
 .maindiv {
     border: black solid 3px;
     border-radius: 3%;
-    padding: 9%;
+    padding: 5%;
     margin: 5%;
-    width: 15%;
-    padding-bottom: 20%;
+    width: 20%;
+    /* padding-bottom: 10%; */
+    font-family: 'Courier New', Courier, monospace;
 }
 .sidediv {
     border: black solid 2px;
-    border-radius: 3%;
-    width: 150%;
-   
+    
 }
 h1 {
     font-size: 20pt;
 }
+button {
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20pt;
+}
+.r {
+    color:tomato
+}
+
 
 </style>
