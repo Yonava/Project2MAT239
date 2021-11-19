@@ -1,7 +1,7 @@
 <template>
     <div class="maindiv">
         <h1>i) A Roll of the Dice</h1>
-        <h1 style="font-size: 12pt">How Many Dice Shall We Roll?</h1> 
+        <h1 style="font-size: 12pt">How Many Die Shall We Roll?</h1> 
         <input type="text" placeholder="# of Rolls" v-model="prisoners">
         <br>
         <div v-if="dice.length > 0" class="dice"> 
@@ -18,6 +18,9 @@
         <h1>Sum of Rolls:</h1>
         <h1 :style="totalcolor">{{ total }}</h1>
         <p>*11+ Needed to ensure freedom</p>
+        <p>*Probabilities Are Estimates, not the real deal</p>
+        <h1>Chance of Escape:</h1>
+        <h1>{{ prob }}%</h1>
         <button v-on:click="rolldice()">Roll</button>
     </div>
 </template>
@@ -30,7 +33,13 @@ export default {
             prisoners: 4,
             dice: [],
             total: 0,
-            totalcolor: 'color: black;'
+            totalcolor: 'color: black;',
+            prob: 90,
+        }
+    },
+    watch: {
+        prisoners() {
+            this.functionalProb();
         }
     },
     methods: {
@@ -58,6 +67,88 @@ export default {
                 this.dice.push({outcome: 0, id: i+1})
             }
 
+        },
+        probability() {
+            if (this.prisoners > 10) {
+                this.prob = 100;
+                
+            }
+            else {
+
+
+                let outcomes = [];
+                let increment = 1;
+                for (let i = 0; i < 6**this.prisoners; i++) {
+                    let entry = []
+                    for (let j = 0; j < this.prisoners; j++) {
+                        entry.push(increment)
+                    }
+                    outcomes.push(entry)
+                    increment++;
+                    if (increment > 6) increment = 1
+                }
+                if (this.prisoners > 1) {
+                    for (let m = 0; m < this.prisoners-1; m++) {
+                        let count = 1;
+                        for (let i = 0; i < outcomes.length; i++) {
+                            outcomes[i][m] = count
+                            if (i % 6 === 0) count++;
+                            if (count > 6) count = 1;
+                        }
+                    }
+                }
+                console.log(outcomes)
+
+
+                let desired = 0
+                for (let i = 0; i < outcomes.length; i++) {
+                    let sum = outcomes[i].reduce((partial_sum, a) => partial_sum + a, 0);
+                    
+                    if (sum > 10) desired++;
+                }
+                this.prob = (desired/outcomes.length)*100
+
+            }
+        },
+        functionalProb() {
+            switch (parseInt(this.prisoners)) {
+                case 0:
+                    this.prob = 0;
+                    break;
+                case 1:
+                    this.prob = 0;
+                    break;
+                case 2:
+                    this.prob = 10;
+                    break;
+                case 3:
+                    this.prob = 70;
+                    break;
+                case 4:
+                    this.prob = 90;
+                    break;
+                case 5:
+                    this.prob = 98;
+                    break;
+                case 6:
+                    this.prob = 99;
+                    break;
+                case 7:
+                    this.prob = 99.9;
+                    break;
+                case 8:
+                    this.prob = 99.9;
+                    break; 
+                case 9:
+                    this.prob = 99.9;
+                    break; 
+                case 10:
+                    this.prob = 99.9;
+                    break;
+                default:
+                    this.prob = 100;
+                    break;   
+            }
         }
     },
 }
