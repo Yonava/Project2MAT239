@@ -91,17 +91,19 @@ export default {
 <style scoped>
 input {
     color: black;
-    margin: 4%;
+    /* margin: 4%; */
 }
 .slider {
     color: black;
 }
 .maindiv {
     border: black solid 3px;
-    border-radius: 3%;
-    padding: 5%;
-    margin: 5%;
-    width: 20%;
+    border-radius: 0%;
+    background-color: white;
+    display: block;
+    padding: 2%;
+    margin: 2%;
+    width: 600px;
     /* padding-bottom: 10%; */
     font-family: 'Courier New', Courier, monospace;
 }
