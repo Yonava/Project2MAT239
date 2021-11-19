@@ -26,6 +26,7 @@ export default {
   },
   mounted() {
     this.$refs.sim1.rolldice()
+    this.$refs.sim1.functionalProb()
   }
 }
 </script>

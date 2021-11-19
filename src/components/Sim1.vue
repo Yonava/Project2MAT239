@@ -3,6 +3,8 @@
         <h1>i) A Roll of the Dice</h1>
         <h1 style="font-size: 12pt">How Many Die Shall We Roll?</h1> 
         <input type="text" placeholder="# of Rolls" v-model="prisoners">
+        <h1 style="font-size: 12pt">Sum Required for Freedom</h1> 
+        <input type="text" placeholder="Required Sum" v-model="requiredsum">
         <br>
         <div v-if="dice.length > 0" class="dice"> 
             <div class="inline" v-for="die in dice" :key="die.id">
@@ -17,10 +19,9 @@
         </div> 
         <h1>Sum of Rolls:</h1>
         <h1 :style="totalcolor">{{ total }}</h1>
-        <p>*11+ Needed to ensure freedom</p>
-        <p>*Probabilities Are Estimates, not the real deal</p>
+        <p>*{{ requiredsum }}+ Needed to ensure freedom</p>
         <h1>Chance of Escape:</h1>
-        <h1>{{ prob }}%</h1>
+        <h1>{{ prob.toFixed(5) }}%</h1>
         <button v-on:click="rolldice()">Roll</button>
     </div>
 </template>
@@ -35,10 +36,15 @@ export default {
             total: 0,
             totalcolor: 'color: black;',
             prob: 90,
+            iterations: 10000,
+            requiredsum: 11
         }
     },
     watch: {
         prisoners() {
+            this.functionalProb();
+        },
+        requiredsum() {
             this.functionalProb();
         }
     },
@@ -52,7 +58,7 @@ export default {
                 this.total += this.dice[i].outcome
             }
 
-            if (this.total > 10) {
+            if (this.total > this.requiredsum-1) {
                 this.totalcolor = 'color: lime;'
             }
             else { 
@@ -68,7 +74,7 @@ export default {
             }
 
         },
-        probability() {
+        probability() { // not used
             if (this.prisoners > 10) {
                 this.prob = 100;
                 
@@ -111,44 +117,23 @@ export default {
             }
         },
         functionalProb() {
-            switch (parseInt(this.prisoners)) {
-                case 0:
-                    this.prob = 0;
-                    break;
-                case 1:
-                    this.prob = 0;
-                    break;
-                case 2:
-                    this.prob = 10;
-                    break;
-                case 3:
-                    this.prob = 70;
-                    break;
-                case 4:
-                    this.prob = 90;
-                    break;
-                case 5:
-                    this.prob = 98;
-                    break;
-                case 6:
-                    this.prob = 99;
-                    break;
-                case 7:
-                    this.prob = 99.9;
-                    break;
-                case 8:
-                    this.prob = 99.9;
-                    break; 
-                case 9:
-                    this.prob = 99.9;
-                    break; 
-                case 10:
-                    this.prob = 99.9;
-                    break;
-                default:
-                    this.prob = 100;
-                    break;   
+
+            this.iterations = parseInt(this.iterations)
+            let desired = 0
+            this.prob = 0
+            
+            for (let i = 0; i < this.iterations; i++) {
+                
+                let total = [];
+                for (let j = 0; j < this.prisoners; j++) {
+                    let roll = Math.floor(Math.random()*6)+1;
+                    total.push(roll);
+                }
+                let sum = total.reduce((partial_sum, a) => partial_sum + a, 0);
+                
+                if (sum > this.requiredsum-1) desired++;
             }
+            this.prob = (desired/this.iterations)*100
         }
     },
 }
