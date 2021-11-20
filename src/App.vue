@@ -1,15 +1,16 @@
 <template>
     <div>
+      <a id="simulators"></a>
       <center>
         <div class="title">
         <h1 style="font-family: 'Courier New', Courier, monospace;">MAT239 Project II, Yona Voss-Andreae</h1>
         </div>
         <div class="maindiv">
-          <Sim1 ref="sim1" />
+          <Sim1 ref="sim1" @sum="updatesum($event)"/>
           <Sim2 />
           <Sim3 />
         </div>
-      </center>
+      
       <div class="essay">
         <h1>Abstract:</h1>
       <p>
@@ -38,13 +39,55 @@
       <h1>i)</h1>
       <p>
         This scenario presents itself pretty straightforwardly, each prisoner is given a choice
-        to roll a fair, six sided die. For the prisoners to be set free, they need to require 
-        that the dice rolled show a minimum sum of eleven. The strategy is clear, the more dice that are 
+        to roll a fair, six sided die. For the prisoners to be set free, the dice need to show a minimum sum
+        of {{ requiredSum }}. 
+        The strategy is clear, the more dice that are 
         rolled, the better the odds of escape. The odds shown are a simulation that is expressed with 
         the following pseudo code:
       </p>
       <img class="example" src="./assets/example1.jpg" alt="example1">
+      <h1>ii)</h1>
+      <p>
+        In scenario 2, the prisoners are isolated into separate cells and given a choice to flip a coin. 
+        If all the coins flipped come up tails, the prisoners are released. However, if any coin 
+        flipped by any of the prisoners lands on heads, no one is freed. Furthermore, if no coins get 
+        flipped, everyone remains locked up. While this question would be an interesting game from a psychological 
+        standpoint, one more tool is given to each prisoner. This tool is a random number generator, calibrated with 
+        the slider, that informs each prisoner individually whether to flip the coin or not. In the case of 4 
+        prisoners, informing the prisoners to flip approximately 34% of the time is optimal. To understand why, we 
+        must first go over the probability of escape given n number of times the coin is flipped:
+      </p>
+      <img class="example" src="./assets/equation1.jpg" alt="equation1">
+      <p>
+        If we map n to the probability of escape we get:
+        (0, 0), (1, .5), (2, .25), (3, .125), (4, .0625)
+      </p>
+      <p>
+        <b>Note:</b> An important observation to be made when attempting to optimize the outcome of escape 
+        is that the effects of no prisoners flipping is weighted far heavier negatively than if 2 prisoners flip.
+      </p>
+      <p>
+        Play around with the simulator, increasing iterations will produce a result with higher precision.
+        Adjusting prisoners, and the flip probability may yield unexpected or suprising results!
+      </p>
+      <h1>iii)</h1>
+      <p>
+        Scenario 3 acts a lot like scenario 2. The difference between them is that while scenario 2 uses a coin flip
+        as a determinant in whether the group of inmates gets to walk free, now it's a dice. The same rules as the last
+        game apply however now they must role an odd number instead of tails. When determining the probability
+        of a desired outcome, in this case rolling odd numbers on a six sided die, the equation is
+        <b># of desired outcomes / all possible outcomes</b>
+        or 3/6. Flipping a coin has 2 possible outcomes (heads or tails) which is 1/2. Simplifying 3/6 gives us 1/2,
+        due to this, scenairo 2 and 3 both reduce to the same odds. Lets write a simulation for the probability of
+        escape given 4 prisoners, played out over 100 games in pseudo code:
+      </p>
+      <img class="example" src="./assets/example2.jpg" alt="example2">
+      <h1>Time to Experiment:</h1>
+      <a href="#simulators">
+      <h2>Back to Simulations!</h2>
+      </a>
       </div>
+      </center>
     </div>
 </template>
 
@@ -60,6 +103,16 @@ export default {
     Sim1,
     Sim2,
     Sim3
+  },
+  data: function() {
+    return {
+      requiredSum: 11,
+    }
+  },
+  methods: {
+    updatesum(x) {
+      this.requiredSum = x
+    }
   },
   mounted() {
     this.$refs.sim1.rolldice()
@@ -85,6 +138,7 @@ export default {
   padding: 2%;
   margin: 2%;
   background-color: rgb(247, 210, 195);
+ 
 }
 .title {
   border: black solid 3px;
