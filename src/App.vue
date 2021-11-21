@@ -27,12 +27,12 @@
         However, if your partner snitches, you end up being the one serving 3 years.
         Alternatively if you both stay quiet you get 1 year each, if both of you talk,
         you are each looking at 2 years in jail. What will you do? Staying quiet, while
-        risking the possibility of the maximum sentence is the best decision from the group's standpoint,
+        risking the possibility of the maximum sentence is the best decision from the groups standpoint,
         while cooperating with investigators could land you and your partner in jail
         a combined 4 years, twice as long. 
         In Discrete Mathematics, Project II, the dilemma our prisoners are given follow circumstances
-        in which simulating probability can determine with near certainty what the best chances of
-        escape are for our prisoners encountered in each scenario. Read the following three scenario
+        in which simulating probability can determine, within an order of approximation, what the likelihood of
+        escape is. Read the following three scenario
         descriptions. I encourage you to experiment with the numbers attached to each simulation to see how
         close to freedom you can get our prisoners.
       </p>
@@ -55,7 +55,7 @@
         standpoint, one more tool is given to each prisoner. This tool is a random number generator, calibrated with 
         the slider, that informs each prisoner individually whether to flip the coin or not. In the case of 4 
         prisoners, informing the prisoners to flip approximately 34% of the time is optimal. To understand why, we 
-        must first go over the probability of escape given n number of times the coin is flipped:
+        must go over the probability of escape given n number of times the coin is flipped:
       </p>
       <img class="example" src="./assets/equation1.jpg" alt="equation1">
       <p>
@@ -63,8 +63,9 @@
         (0, 0), (1, .5), (2, .25), (3, .125), (4, .0625)
       </p>
       <p>
-        <b>Note:</b> An important observation to be made when attempting to optimize the outcome of escape 
+        When attempting to optimize the outcome of escape, what must be noted
         is that the effects of no prisoners flipping is weighted far heavier negatively than if 2 prisoners flip.
+        If the prisoners flip 25% of the time, no coins are flipped too often for it to be a tenable solution.
       </p>
       <p>
         Play around with the simulator, increasing iterations will produce a result with higher precision.
@@ -73,8 +74,8 @@
       <h1>iii)</h1>
       <p>
         Scenario 3 acts a lot like scenario 2. The difference between them is that while scenario 2 uses a coin flip
-        as a determinant in whether the group of inmates gets to walk free, now it's a dice. The same rules as the last
-        game apply however now they must role an odd number instead of tails. When determining the probability
+        as a determinant in whether the group of inmates gets to walk free, now it's a die. The same rules as the last
+        game apply, however, now they must role an odd number instead of tails. When determining the probability
         of a desired outcome, in this case rolling odd numbers on a six sided die, the equation is
         <b># of desired outcomes / all possible outcomes</b>
         or 3/6. Flipping a coin has 2 possible outcomes (heads or tails) which is 1/2. Simplifying 3/6 gives us 1/2,

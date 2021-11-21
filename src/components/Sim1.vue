@@ -10,11 +10,11 @@
             <div class="inline" v-for="die in dice" :key="die.id">
                 <!-- <p>Die #{{ die.id }} - {{ die.outcome }}</p> -->
                 <img v-if="die.outcome === 1" width="25" src="../assets/one.jpg" alt="dice" />
-                <img v-if="die.outcome === 2" width="25" src="../assets/two.jpg" alt="dice" />
-                <img v-if="die.outcome === 3" width="25" src="../assets/three.jpg" alt="dice" />
-                <img v-if="die.outcome === 4" width="25" src="../assets/four.jpg" alt="dice" />
-                <img v-if="die.outcome === 5" width="25" src="../assets/five.jpg" alt="dice" />
-                <img v-if="die.outcome === 6" width="25" src="../assets/six.jpg" alt="dice" />
+                <img v-else-if="die.outcome === 2" width="25" src="../assets/two.jpg" alt="dice" />
+                <img v-else-if="die.outcome === 3" width="25" src="../assets/three.jpg" alt="dice" />
+                <img v-else-if="die.outcome === 4" width="25" src="../assets/four.jpg" alt="dice" />
+                <img v-else-if="die.outcome === 5" width="25" src="../assets/five.jpg" alt="dice" />
+                <img v-else width="25" src="../assets/six.jpg" alt="dice" />
             </div>
         </div> 
         <h1>Sum of Rolls:</h1>
@@ -104,9 +104,7 @@ export default {
                         }
                     }
                 }
-                console.log(outcomes)
-
-
+               
                 let desired = 0
                 for (let i = 0; i < outcomes.length; i++) {
                     let sum = outcomes[i].reduce((partial_sum, a) => partial_sum + a, 0);
