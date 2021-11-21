@@ -69,17 +69,17 @@
       </p>
       <p>
         Play around with the simulator, increasing iterations will produce a result with higher precision.
-        Adjusting prisoners, and the flip probability may yield unexpected or suprising results!
+        Adjusting prisoners, and the flip probability may yield unexpected or surprising results!
       </p>
       <h1>iii)</h1>
       <p>
         Scenario 3 acts a lot like scenario 2. The difference between them is that while scenario 2 uses a coin flip
         as a determinant in whether the group of inmates gets to walk free, now it's a die. The same rules as the last
-        game apply, however, now they must role an odd number instead of tails. When determining the probability
+        game apply, however, now they must roll an odd number instead of tails. When determining the probability
         of a desired outcome, in this case rolling odd numbers on a six sided die, the equation is
         <b># of desired outcomes / all possible outcomes</b>
         or 3/6. Flipping a coin has 2 possible outcomes (heads or tails) which is 1/2. Simplifying 3/6 gives us 1/2,
-        due to this, scenairo 2 and 3 both reduce to the same odds. Lets write a simulation for the probability of
+        due to this, scenario 2 and 3 both reduce to the same odds. Let's write a simulation for the probability of
         escape given 4 prisoners, played out over 100 games in pseudo code:
       </p>
       <img class="example" src="./assets/example2.jpg" alt="example2">
