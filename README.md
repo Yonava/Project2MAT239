@@ -1,5 +1,10 @@
 # project2mat239
 
+## Website live at:
+```
+https://mat239proj2.netlify.app/
+```
+
 ## Project setup
 ```
 npm install
